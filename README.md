@@ -1,0 +1,3 @@
+## Proyecto: Red Social en React 19
+
+Este proyecto es una red social desarrollada como ejercicio práctico para fortalecer habilidades en **React 19**. Su propósito principal es explorar conceptos modernos como hooks, manejo de estado, componentes reutilizables y asincronía, aplicados en un entorno realista. A través de esta práctica, se busca consolidar conocimientos y mejorar la capacidad de construir aplicaciones interactivas y escalables con React.
