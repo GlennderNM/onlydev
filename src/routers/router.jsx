@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"; // Importamos BrowserRouter
-import { HomePage } from "../pages/HomePage";
 import { MainLayout } from "../layouts/MainLayout";
+import { HomePage } from "../pages/HomePage"; // Asegúrate de que esta ruta sea correcta
 
 export function MyRouter() {
   return (
