@@ -3,7 +3,7 @@ import { Sidebar } from "../components/Sidebar/Sidebar";
 
 export const MainLayout = () => {
   return (
-    <main className="flex justify-center h-screen overflow-hidden bg-white dark:bg-bg-dark text-black dark:text-white transition-colors duration-300">
+    <main className="flex justify-center h-screen overflow-hidden bg-white dark:bg-[var(--color-bg-dark)] text-black dark:text-white transition-colors duration-300">
       <section className="flex w-full max-w-[1300px] h-full">
         <Sidebar />
         {/* Contenido principal */}
