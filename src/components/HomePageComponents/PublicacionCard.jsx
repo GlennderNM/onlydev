@@ -24,7 +24,7 @@ export const PublicacionCard = () => {
       <div className="mt-3">
         <p className="mb-2">Titulo</p>
         <div>
-          <PostImageFrame />
+          <PostImageFrame src={"https://images.unsplash.com/photo-1590099914662-a76f2f83b802?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8OSUzQTE2fGVufDB8fDB8fHww"}/>
         </div>
       </div>
     </div>
