@@ -1,10 +1,19 @@
+import { Icon } from "@iconify/react/dist/iconify.js";
 import logo from "../assets/logoonlydev.png";
+import { useState } from "react";
 
 export const LoginPage = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    }
   return (
     <main className="flex h-screen w-full">
       {/* Lado izquierdo - banner azul */}
-      <section className="bg-[#00b0f0] flex flex-col justify-center items-center overflow-hidden">
+      <section
+        className="hidden md:flex md:w-1/2 bg-[#00b0f0] 
+       flex-col justify-center items-center overflow-hidden"
+      >
         <div className="px-8 text-white text-center flex flex-col gap-4">
           <div className="flex items-center gap-3 justify-center">
             <img src={logo} className="h-20 w-20" />
@@ -16,16 +25,31 @@ export const LoginPage = () => {
             <span className="text-3xl font-semibold">
               Registrate para apoyar
             </span>
-            <span className="text-3xl font-semibold">
-              {" "}
-              a tus creadores{" "}
-            </span>
+            <span className="text-3xl font-semibold"> a tus creadores </span>
             <span className="text-3xl font-semibold">favoritos</span>
           </div>
         </div>
       </section>
       {/* Lado derecha - formulario de inicio de seccion*/}
-      <section></section>
+      <section className="w-full md:w-1/2 flex items-center justify-center px-6 md:px-16 py-8">
+        <div className="w-full max-w-md">
+          <h1 className="text-2xl font-medium mb-6 text-center">
+            Inicia sesión{" "}
+            <span className="text-[#0091ea] text-xl"> (modo invitado)</span>
+          </h1>
+          <form>
+            <div className="mb-4">
+                <input placeholder="Email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00aff0]"/>
+            </div>
+            <div className="relative">
+                <input placeholder="Password" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00aff0]"/>
+                <button className="absolute top-1/2 -translate-y-1/2 right-3 text-gray-500 cursor-pointer" type="button" onClick={togglePasswordVisibility}>
+                    <Icon icon={showPassword ? "mdi:eye-off" : "mdi:eye"}/>
+                </button>
+            </div>
+          </form>
+        </div>
+      </section>
     </main>
   );
 };
