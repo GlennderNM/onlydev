@@ -3,10 +3,10 @@ import logo from "../assets/logoonlydev.png";
 import { useState } from "react";
 
 export const LoginPage = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword);
-    }
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <main className="flex h-screen w-full">
       {/* Lado izquierdo - banner azul */}
@@ -39,15 +39,52 @@ export const LoginPage = () => {
           </h1>
           <form>
             <div className="mb-4">
-                <input placeholder="Email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00aff0]"/>
+              <input
+                placeholder="Email"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00aff0]"
+              />
             </div>
-            <div className="relative">
-                <input placeholder="Password" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00aff0]"/>
-                <button className="absolute top-1/2 -translate-y-1/2 right-3 text-gray-500 cursor-pointer" type="button" onClick={togglePasswordVisibility}>
-                    <Icon icon={showPassword ? "mdi:eye-off" : "mdi:eye"}/>
-                </button>
+            <div className="relative mb-4">
+              <input
+                placeholder="Password"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00aff0]"
+              />
+              <button
+                className="absolute top-1/2 -translate-y-1/2 right-3 text-gray-500 cursor-pointer"
+                type="button"
+                onClick={togglePasswordVisibility}
+              >
+                <Icon icon={showPassword ? "mdi:eye-off" : "mdi:eye"} />
+              </button>
             </div>
+            <button
+              type="submit"
+              className="w-full bg-gray-200 text-gray-500 font-medium py-3 rounded-full hover:bg-[#00aff0] transition duration-200 cursor-pointer hover:text-white"
+            >
+              Iniciar sesión
+            </button>
           </form>
+          <div className="mt-4 text-xs text-gray-500 text-center">
+            Al iniciar sesión y usar OnlyDevs, aceptas nuestros {" "}
+            <a href="#" className="text-[#00aff0]">
+              Términos de servicio {" "}
+            </a>
+            y {" "}
+            <a href="#" className="text-[#00aff0]">
+              Política de privacidad {" "}
+            </a>
+            y confirmas que tienes al menos 18 años.
+          </div>
+          <div  className="mt-6 text-center">
+            <a href="#" className="text-[#00aff0] text-sm">
+                Has olvidado tu contraseña?
+            </a>
+            <div className="mt-1">
+                <a href="#" className="text-[#00aff0] text-sm">
+                    Registrate para OnlyDevs
+                </a>
+            </div>
+          </div>
         </div>
       </section>
     </main>
