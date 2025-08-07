@@ -23,8 +23,8 @@ export const useSubcription = create((set) => {// Store para manejar la suscripc
             set({ user: session.user  }); // Si hay una sesión, actualiza el usuario en el store
         }
     });
-    supabase.auth.onAuthStateChange((_event, session)=>{
-        if(session?.user){
+    supabase.auth.onAuthStateChange((_event, session)=>{ 
+        if(session?.user){ 
             set({user: session.user})
         }else{
             set({user: null})
