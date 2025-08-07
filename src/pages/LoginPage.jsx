@@ -3,25 +3,37 @@ import logo from "../assets/logoonlydev.png";
 import { useEffect, useState } from "react";
 import { useGenerarCodigosAleatorios } from "../Hooks/useGenerarCodigosAleatorios";
 import { useAuthStore } from "../store/AuthStore";
+import { useCrearUsuarioYSesionMutate } from "../stack/LoginStack";
+import { Toaster } from "sonner";
+import { useForm } from "react-hook-form";
 
 
 
-export const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const { setCredenciales } = useAuthStore();
-  const togglePasswordVisibility = () => {
+export const LoginPage = () => { 
+  const [showPassword, setShowPassword] = useState(false); // Estado para controlar la visibilidad de la contraseña
+  const { setCredenciales } = useAuthStore(); // Hook para acceder al store de autenticación
+  const [email, setEmail] = useState(); // Estado para almacenar el email
+  const [password, setPassword] = useState(); // Estado para almacenar la contraseña
+
+  const togglePasswordVisibility = () => { // Función para alternar la visibilidad de la contraseña
     setShowPassword(!showPassword);
   };
+
+  const {handleSubmit} = useForm(); // Hook de react-hook-form para manejar el formulario, aunque no se usa directamente aquí
+  const {isPending, mutate} = useCrearUsuarioYSesionMutate(); // Hook para manejar la mutación de creación de usuario y sesión
   
-  const response = useGenerarCodigosAleatorios();
+  const response = useGenerarCodigosAleatorios(); // Hook para generar códigos aleatorios
   useEffect(() => {
-    const correoCompleto = response + "@gmail.com";
-    setCredenciales({ email: correoCompleto, password: response})
+    const correoCompleto = response + "@gmail.com"; // Genera un correo aleatorio
+    setCredenciales({ email: correoCompleto, password: response}) // Guarda las credenciales en el store
+    setEmail(correoCompleto); // Actualiza el estado del email
+    setPassword(response);  // Actualiza el estado de la contraseña
   }, [])
 
   return (
     <main className="flex h-screen w-full">
-      {/* Lado izquierdo - banner azul */}
+      <Toaster />
+      {/* Lado izquierdo - imagen y texto descriptivo */}
       <section
         className="hidden md:flex md:w-1/2 bg-[#00b0f0] 
        flex-col justify-center items-center overflow-hidden"
@@ -49,16 +61,18 @@ export const LoginPage = () => {
             Inicia sesión{" "}
             <span className="text-[#0091ea] text-xl"> (modo invitado)</span>
           </h1>
-          <form>
+          <form onSubmit={handleSubmit(mutate)}>
             <div className="mb-4">
               <input
                 placeholder="Email"
+                value={email}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00aff0]"
               />
             </div>
             <div className="relative mb-4">
               <input
                 placeholder="Password"
+                value={password}
                 type={showPassword ? "text" : "password"}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00aff0]"
               />
@@ -72,11 +86,11 @@ export const LoginPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-gray-200 text-gray-500 font-medium py-3 rounded-full hover:bg-[#00aff0] transition duration-200 cursor-pointer hover:text-white"
+              className="w-full bg-gray-200 text-gray-500 font-medium py-3 rounded-full hover:bg-[#00aff0] transition duration-200 cursor-pointer hover:text-white" disabled={isPending}
             >
               Iniciar sesión
             </button>
-          </form>
+          </form >
           <div className="mt-4 text-xs text-gray-500 text-center">
             Al iniciar sesión y usar OnlyDevs, aceptas nuestros {" "}
             <a href="#" className="text-[#00aff0]">
