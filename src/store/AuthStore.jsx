@@ -16,7 +16,6 @@ export const useAuthStore = create((set) => ({ // Store para manejar la autentic
 export const useSubcription = create((set) => {// Store para manejar la suscripción
     const store = {
         user: null, // Estado para almacenar el usuario autenticado
-        setUser: (user) => set({ user }), // Función para actualizar el usuario
     };
     supabase.auth.getSession().then(({ data:{session} }) => { // Obtiene la sesión actual del usuario
         if (session?.user) {
