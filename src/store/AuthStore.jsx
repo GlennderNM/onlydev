@@ -9,7 +9,10 @@ export const useAuthStore = create((set) => ({ // Store para manejar la autentic
             email: p.email,
             password: p.password 
         })
-        return data;
+        return data.user;
+    },
+    cerrarSesion: async () => {
+        await supabase.auth.signOut();
     }
 }))
 
