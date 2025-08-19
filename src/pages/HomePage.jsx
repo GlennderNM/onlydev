@@ -5,6 +5,7 @@ import { PublicacionCard } from "../components/HomePageComponents/PublicacionCar
 import { FormsPost } from "../components/Forms/FormsPost";
 
 export const HomePage = () => {
+  
   return (
     <main className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
       <FormsPost />
