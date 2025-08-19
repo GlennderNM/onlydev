@@ -3,6 +3,7 @@ import { MainLayout } from "../layouts/MainLayout";
 import { HomePage } from "../pages/HomePage"; // Asegúrate de que esta ruta sea correcta
 import { LoginPage } from "../pages/LoginPage";
 import { ProtectedRoute } from "../Hooks/ProtectedRoute";
+import { MiPerfilPage } from "../pages/MiPerfilPage";
 
 export function MyRouter() {
   return (
@@ -19,6 +20,7 @@ export function MyRouter() {
           </ProtectedRoute>
           }>
           <Route index element={<HomePage />} />
+          <Route path="/mi-perfil" element={<MiPerfilPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
