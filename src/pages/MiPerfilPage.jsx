@@ -9,9 +9,9 @@ export const MiPerfilPage = () => {
         return <span>Error al cargar Usuario... {error.message}</span>
     }
   return (
-    <div className="h-screen bg-amber-300 text-black">
+    <div className="h-screen bg-amber-300 text-black flex flex-col">
         <span>MiPerfilPage</span>
-        <span>{data?.nombre}</span>
+        <span>Usuario: {data?.nombre}</span>
     </div>
   )
 }
