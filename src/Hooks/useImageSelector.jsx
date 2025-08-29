@@ -85,7 +85,6 @@ export const ImageSelector = () => {
         </button>
       </header>
       <main className="p-8 flex flex-col items-center justify-center min-h-[240px] transition-colors duration-300">
-        {console.log(fileUrl)}
         {fileUrl ? (
           <div className="relative inline-block group">
             {fileType === "image" ? (
@@ -108,8 +107,10 @@ export const ImageSelector = () => {
             <button
               type="button"
               onClick={openFileSelector}
-              className="absolute bottom-2 right-2 w-8 h-8 bg-black bg-opacity-60 rounded-full border-none cursor-pointer flex items-center justify-center transition duration-300 opacity-0 group:hover:opacity-100 hover:bg-opacity-80"
-            ></button>
+              className="absolute bottom-2 right-2 w-8 h-8 bg-black bg-opacity-60 rounded-full border-none cursor-pointer flex items-center justify-center transition duration-300 opacity-0 group-hover:opacity-100 hover:bg-opacity-80"
+            >
+                <Icon icon="lets-icons:edit-fill" className="text-white text-lg" />
+            </button>
           </div>
         ) : (
           <>
