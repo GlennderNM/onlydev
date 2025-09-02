@@ -112,6 +112,7 @@ export const useImageSelector = () => {
 };
 
 export const ImageSelector = () => {
+  const {setStateImage} = usePostStore()
   const {
     file,
     fileUrl,
@@ -126,11 +127,13 @@ export const ImageSelector = () => {
     handleDragOver,
     handleDrop
   } = useImageSelector();
+
+  
   return (
     <section className="relative w-full max-w-md bg-[#242526] rounded-lg shadow-xl overflow-hidden">
       <header className="relative h-12 flex items-center justify-center border-b border-gray-700">
         <h2 className="text-white font-medium">Agregar fotos/videos</h2>
-        <button className="absolute right-4 text-gray-400 hover:text-white transition-colors duration-200">
+        <button onClick={setStateImage} className="absolute right-4 text-gray-400 hover:text-white transition-colors duration-200">
           <Icon icon="mdi:close" className="text-xl" />
         </button>
       </header>

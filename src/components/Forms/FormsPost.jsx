@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { ImageSelector } from "../../Hooks/useImageSelector";
+import { usePostStore } from "../../store/postStore";
 
 export const FormsPost = () => {
   const { dataUsuarioAuth } = useUsuariosStore();
@@ -11,6 +12,7 @@ export const FormsPost = () => {
   const textareaRef = useRef(null);
   const pickerRef = useRef(null);
   const [postText, setPostText] = useState("");
+  const {stateImage, setStateImage, setStateForm } = usePostStore()
   const addEmoji = (emojiData) => {
     const emojiChar = emojiData.emoji;
     const textarea = textareaRef.current;
@@ -50,7 +52,7 @@ export const FormsPost = () => {
         {/* Header */}
         <header className="flex items-center justify-between p-4 border-b border-gray-500/40">
           <h2 className="text-xl font-semibold">Crear Publicacion </h2>
-          <BtnClose />
+          <BtnClose funcion={setStateForm}/>
         </header>
         {/** Use Info */}
         <main className="p-4 space-y-4">
@@ -96,7 +98,9 @@ export const FormsPost = () => {
               </div>
             </div>
           </form>
-          <ImageSelector />
+          {
+            stateImage && <ImageSelector />
+          }
         </main>
         <footer className="p-4 border-t border-gray-500/40">
               <div className="flex items-center justify-between p-3 border border-gray-500/40 rounded-lg">
@@ -104,7 +108,7 @@ export const FormsPost = () => {
                   Agregar a tu Publicacion
                 </span>
                 <div className="flex space-x-4">
-                  <button className="p-1 rounded-full text-black/50 dark:text-white/50 hover:bg-gray-700">
+                  <button onClick={setStateImage} className="p-1 rounded-full text-black/50 dark:text-white/50 hover:bg-gray-700">
                     <Icon icon="mdi:image" className="text-2xl" />
                   </button>
                 </div>
