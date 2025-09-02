@@ -57,6 +57,44 @@ export const useImageSelector = () => {
       setFileType("video"); // Tipo de archivo
     }
   };
+
+  const removeImage = () => {
+    setFile(null)
+    setFileUrl("")
+    setFileType("")
+    if(fileInputRef.current){
+      fileInputRef.current.value = ""
+    }
+
+  }
+
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDregging(true);
+  }
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDregging(false);
+  }
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDregging(true);
+  }
+
+  const handleDrop = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDregging(false);
+    const droppedFile = e.dataTransfer.files[0];
+    if(!droppedFile) return
+    await handleImageChange({target: {files: [droppedFile]}})
+  }
+
   return {
     file,
     fileUrl,
@@ -64,6 +102,12 @@ export const useImageSelector = () => {
     fileInputRef,
     handleImageChange,
     openFileSelector,
+    removeImage,
+    isDragging,
+    handleDragEnter,
+    handleDragLeave,
+    handleDragOver,
+    handleDrop
   };
 };
 
@@ -75,6 +119,12 @@ export const ImageSelector = () => {
     fileInputRef,
     handleImageChange,
     openFileSelector,
+    removeImage,
+    isDragging,
+    handleDragEnter,
+    handleDragLeave,
+    handleDragOver,
+    handleDrop
   } = useImageSelector();
   return (
     <section className="relative w-full max-w-md bg-[#242526] rounded-lg shadow-xl overflow-hidden">
@@ -84,7 +134,12 @@ export const ImageSelector = () => {
           <Icon icon="mdi:close" className="text-xl" />
         </button>
       </header>
-      <main className="p-8 flex flex-col items-center justify-center min-h-[240px] transition-colors duration-300">
+      <main className={`p-8 flex flex-col items-center justify-center min-h-[240px] transition-colors duration-300 ${isDragging ? "bg-[#3a3b3c]" : "bg-[#242526]"}`}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
         {fileUrl ? (
           <div className="relative inline-block group">
             {fileType === "image" ? (
@@ -100,7 +155,7 @@ export const ImageSelector = () => {
             )}
             <button
               type="button"
-              className="absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-60 rounded-full border-none cursor-pointer flex items-center justify-center transition duration-300 opacity-0 group-hover:opacity-100 hover:bg-opacity-80"
+              className="absolute top-2 right-2 w-8 h-8 bg-black bg-opacity-60 rounded-full border-none cursor-pointer flex items-center justify-center transition duration-300 opacity-0 group-hover:opacity-100 hover:bg-opacity-80" onClick={removeImage}
             >
               <Icon icon="mdi:close" className="text-white text-lg" />
             </button>
@@ -139,6 +194,7 @@ export const ImageSelector = () => {
         accept="image/*,video/*"
         ref={fileInputRef}
         onChange={handleImageChange}
+        className="hidden"
       />
     </section>
   );
