@@ -3,7 +3,7 @@ import { supabase } from "../supabase/supabase.config";
 
 const tabla = "publicaciones";
 
-const insertarPost = async (p, file) => {
+const insertaPost = async (p, file) => {
   const { data, error } = await supabase
     .from(tabla)
     .insert(p)
@@ -19,11 +19,11 @@ const insertarPost = async (p, file) => {
       url: urlImage,
       id: nuevo_id,
     };
-    await EditarPublicacion(pUrl);
+    await editarPublicacion(pUrl);
   }
 };
 
-const EditarPublicacion = async (p) => {
+const editarPublicacion = async (p) => {
   const { error } = await supabase.from(tabla).update(p).eq("id", p.id);
   if (error) {
     throw new Error(error.message);
@@ -59,5 +59,8 @@ export const usePostStore = create((set) => ({
   stateForm: false,
   setStateForm: () => {
     set((state) => ({ stateForm: !state.stateForm }));
+  },
+  insertarPost: async (p, file) => {
+    await insertaPost(p, file);
   },
 }));
