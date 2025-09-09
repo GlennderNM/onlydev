@@ -16,7 +16,7 @@ const insertaPost = async (p, file) => {
     const nuevo_id = data?.id;
     const urlImage = await subirArchivo(nuevo_id, file);
     const pUrl = {
-      url: urlImage,
+      url: urlImage.publicUrl,
       id: nuevo_id,
     };
     await editarPublicacion(pUrl);

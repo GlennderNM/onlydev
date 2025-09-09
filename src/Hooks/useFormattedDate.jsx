@@ -8,9 +8,9 @@ export function useFormattedDate() {
 
     const offset = fechaActual.getTimezoneOffset() * 60000;
     const fechaLocal = new Date(fechaActual - offset)
-      .toUTCString()
+      .toISOString()
       .slice(0, 19)
-      .replace("T", "");
+      .replace("T", " ");
     setFormattedDate(fechaLocal);
   }, []);
 
