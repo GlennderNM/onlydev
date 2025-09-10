@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import { usePostStore } from "../store/postStore";
 import { useFormattedDate } from "../Hooks/useFormattedDate";
 import { useUsuariosStore } from "../store/UsuariosStore";
@@ -40,9 +40,21 @@ export const useInsertarPostMutate = () => {
 export const useMostrarPostQuery = () => {
   const { dataUsuarioAuth } = useUsuariosStore();
   const { mostrarPost } = usePostStore();
-  return useQuery({
+  const cant_pagina = 10;
+  return useInfiniteQuery({
     queryKey: ["Mostrar post", { id_usuario: dataUsuarioAuth?.id }],
-    queryFn: () =>
-      mostrarPost({ id_usuario: dataUsuarioAuth?.id, desde: 0, hasta: 10 }),
+    queryFn: async ({ pageParam = 0 }) => {
+      const data = mostrarPost({
+        id_usuario: dataUsuarioAuth?.id,
+        desde: pageParam,
+        hasta: cant_pagina,
+      });
+      return data;
+    },
+    getNextPageParam: (lastPage, allPage) => {
+      if (!lastPage || lastPage.length < cant_pagina) return undefined;
+      return allPage.length * cant_pagina;
+    },
+    initialPageParam: 0,
   });
 };
