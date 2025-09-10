@@ -7,6 +7,7 @@ import { usePostStore } from "../store/postStore";
 import { Toaster } from "sonner";
 import { useMostrarPostQuery } from "../stack/PostStack";
 import { useEffect, useRef } from "react";
+import { SpinnerLocal } from "../components/ui/spinners/SpinnerLocal";
 
 export const HomePage = () => {
   const { stateForm, setStateForm } = usePostStore();
@@ -49,6 +50,10 @@ export const HomePage = () => {
                 <PublicacionCard key={`${pageIndex} - ${index}`} item={item} />
               ))
             )}
+            {
+              isFetchingNextPage && <SpinnerLocal />
+            }
+            
           </div>
           Principal
         </article>
