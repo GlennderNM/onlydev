@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { PostImageFrame } from "./PostImageFrame";
+import { PostVideoFrame } from "./PostVideoFrame";
 
-export const PublicacionCard = ({item}) => {
+export const PublicacionCard = ({ item }) => {
   return (
     <div className="border-b border-gray-500/50 p-4">
       <div className="flex justify-between">
@@ -24,17 +25,25 @@ export const PublicacionCard = ({item}) => {
       <div className="mt-3">
         <p className="mb-2">{item?.descripcion}</p>
         <div>
-          {
-            item?.url !== "-" && <PostImageFrame src={item?.url}/>
-          }
-          
+          {item?.url !== "-" &&
+            (item?.type === "imagen" ? (
+              <PostImageFrame src={item?.url} />
+            ) : (
+              <PostVideoFrame src={item?.url} />
+            ))}
         </div>
         <div className="flex justify-between mt-4">
           <button>
-            <Icon icon={"mdi:heart-outline"} className="text-3xl p-1 rounded-full text-gray-400 hover:bg-[rgba(78,184,233,0.2)] cursor-pointer" />
+            <Icon
+              icon={"mdi:heart-outline"}
+              className="text-3xl p-1 rounded-full text-gray-400 hover:bg-[rgba(78,184,233,0.2)] cursor-pointer"
+            />
           </button>
           <button className="flex items-center gap-2 cursor-pointer">
-            <Icon icon={"mdi:comment-outline"} className="text-3xl p-1 rounded-full text-gray-400 cursor-pointer" />
+            <Icon
+              icon={"mdi:comment-outline"}
+              className="text-3xl p-1 rounded-full text-gray-400 cursor-pointer"
+            />
             <span className="text-xs md:text-sm text-gray-400">Comentar</span>
           </button>
         </div>
