@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { usePostStore } from "../store/postStore";
 import { useFormattedDate } from "../Hooks/useFormattedDate";
 import { useUsuariosStore } from "../store/UsuariosStore";
@@ -31,8 +31,18 @@ export const useInsertarPostMutate = () => {
     },
     onSuccess: () => {
       toast.success("Publicado");
-      setStateForm(false)
-      setFile(null)
+      setStateForm(false);
+      setFile(null);
     },
+  });
+};
+
+export const useMostrarPostQuery = () => {
+  const { dataUsuarioAuth } = useUsuariosStore();
+  const { mostrarPost } = usePostStore();
+  return useQuery({
+    queryKey: ["Mostrar post", { id_usuario: dataUsuarioAuth?.id }],
+    queryFn: () =>
+      mostrarPost({ id_usuario: dataUsuarioAuth?.id, desde: 0, hasta: 10 }),
   });
 };
