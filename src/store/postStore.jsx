@@ -50,6 +50,8 @@ const subirArchivo = async (id, file) => {
 };
 
 export const usePostStore = create((set) => ({
+  itemSelect: null,
+  setItemSelect: (p) => set({itemSelect: p}),
   file: null,
   setFile: (p) => set({ file: p }),
   stateImage: false,
@@ -74,6 +76,10 @@ export const usePostStore = create((set) => ({
       throw new Error(error.message);
     }
     set({ dataPost: data });
-    return data
+    return data;
+  },
+  likePost: async (p) => {
+    const { error } = await supabase.rpc("toggle_like", p);
+    if (error) throw new Error(error.message);
   },
 }));
