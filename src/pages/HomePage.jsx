@@ -9,6 +9,7 @@ import { useMostrarPostQuery } from "../stack/PostStack";
 import { useEffect, useRef } from "react";
 import { SpinnerLocal } from "../components/ui/spinners/SpinnerLocal";
 import { useSupabaseSubscription } from "../Hooks/useSupabaseSubscription";
+import { ComentariosModal } from "../components/HomePageComponents/ComentariosModal";
 
 export const HomePage = () => {
   const { stateForm, setStateForm } = usePostStore();
@@ -70,6 +71,7 @@ export const HomePage = () => {
         </article>
         <article>Sidebar derecho</article>
       </section>
+      <ComentariosModal />
     </main>
   );
 };

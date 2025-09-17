@@ -69,7 +69,7 @@ export const PublicacionCard = ({ item }) => {
             </spam>
           )}
           {item?.comentarios_count == 0 && (
-            <span className="text-gray-400 cursor-pointer hover:underline">
+            <span className="text-xs text-gray-400 cursor-pointer hover:underline">
               {item?.comentarios_count} comentarios
             </span>
           )}
