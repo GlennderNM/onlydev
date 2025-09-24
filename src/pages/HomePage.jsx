@@ -13,7 +13,7 @@ import { ComentariosModal } from "../components/HomePageComponents/ComentariosMo
 import { useComentariosStore } from "../store/ComentariosStore";
 
 export const HomePage = () => {
-  const { stateForm, setStateForm } = usePostStore();
+  const { stateForm, setStateForm, itemSelect } = usePostStore();
   const { showModal } = useComentariosStore();
   const {
     data: dataPost,

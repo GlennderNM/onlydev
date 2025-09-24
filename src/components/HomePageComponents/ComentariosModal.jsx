@@ -4,13 +4,17 @@ import { useInsertarComentarioMutate } from "../../stack/ComentariosStack";
 import { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
 import { useComentariosStore } from "../../store/ComentariosStore";
+import { useUsuariosStore } from "../../store/UsuariosStore";
+import { usePostStore } from "../../store/postStore";
 
-export const ComentariosModal = ({ item, onClose }) => {
+export const ComentariosModal = () => {
   const [comentario, setComentario] = useState("");
+  const { itemSelect: item } = usePostStore();
   const [showEmojiPicker, setEmojiPicker] = useState(false);
   const pickerRef = useRef(null);
   const textComentarioRef = useRef(null);
-  const {setShowModal} = useComentariosStore()
+  const { setShowModal } = useComentariosStore();
+  const { dataUsuarioAuth } = useUsuariosStore();
   const { mutate: comentarioMutate } = useInsertarComentarioMutate({
     comentario: comentario,
     serComentario: setComentario,
@@ -50,17 +54,16 @@ export const ComentariosModal = ({ item, onClose }) => {
           <div className="flex items-center gap-3 text-black dark:text-white">
             <img
               className="w-12 h-12 rounded-full object-cover"
-              src="https://img.freepik.com/foto-gratis/foto-primer-plano-lindo-loro-colores-sobre-fondo-verde_181624-16152.jpg?semt=ais_hybrid&w=740&q=80"
-              alt=""
+              src={item?.foto_perfil}
             />
 
             <div className="flex items-center gap-2">
               <span className="font-bold lg:max-w-none lg:overflow-visible md:text-ellipsis max-w-[200px] truncate whitespace-nowrap overflow-hidden">
-                Nombre de usuario
+                {item?.nombre_usuario}
               </span>
             </div>
           </div>
-          <span>Descripcion</span>
+          <span>{item?.descripcion}</span>
           <BtnClose funcion={setShowModal} />
         </header>
         <section className="p-4 overflow-y-auto flex-1">
@@ -70,7 +73,7 @@ export const ComentariosModal = ({ item, onClose }) => {
           <section className="w-full gap-2 flex flex-col">
             <section className="flex w-full gap-4">
               <img
-                src="https://img.freepik.com/foto-gratis/foto-primer-plano-lindo-loro-colores-sobre-fondo-verde_181624-16152.jpg?semt=ais_hybrid&w=740&q=80"
+                src={dataUsuarioAuth?.foto_perfil}
                 className="w-10 h-10 rounded-full object-cover"
                 alt="avatar"
               />

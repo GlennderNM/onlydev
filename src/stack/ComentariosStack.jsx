@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useComentariosStore } from "../store/ComentariosStore";
 import { useUsuariosStore } from "../store/UsuariosStore";
 import { usePostStore } from "../store/postStore";
@@ -30,3 +30,12 @@ export const useInsertarComentarioMutate = (p) => {
     },
   });
 };
+
+export const useMostrarComentarios = () => {
+  const {} = useComentariosStore()
+
+  return useQuery({
+    queryKey: ["mostrar comentarios"],
+    queryFn: 
+  })
+}

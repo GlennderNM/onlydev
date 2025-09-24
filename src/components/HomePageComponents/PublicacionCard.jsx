@@ -58,10 +58,11 @@ export const PublicacionCard = ({ item }) => {
             />
           </button>
           <button
-            className="flex items-center gap-2 cursor-pointer" onClick={() => {
-              setItemSelect(item)
-              setShowModal()
-            } }
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => {
+              setItemSelect(item);
+              setShowModal();
+            }}
           >
             <Icon
               icon={"mdi:comment-outline"}
@@ -72,13 +73,13 @@ export const PublicacionCard = ({ item }) => {
         </div>
         <div className="flex gap-4 mt-1">
           {item?.likes > 0 && (
-            <spam className="text-xs text-gray-400">
+            <span className="text-xs text-gray-400">
               {item?.likes} me gusta{" "}
-            </spam>
+            </span>
           )}
-          {item?.comentarios_count == 0 && (
+          {item?.comentario_count > 0 && (
             <span className="text-xs text-gray-400 cursor-pointer hover:underline">
-              {item?.comentarios_count} comentarios
+              {item?.comentario_count} comentarios {console.log(item.comentarios_count)}
             </span>
           )}
         </div>
