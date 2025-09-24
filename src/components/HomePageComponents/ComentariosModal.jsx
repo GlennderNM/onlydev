@@ -1,14 +1,47 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { BtnClose } from "../ui/buttons/BtnClose";
 import { useInsertarComentarioMutate } from "../../stack/ComentariosStack";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import EmojiPicker from "emoji-picker-react";
+import { useComentariosStore } from "../../store/ComentariosStore";
 
 export const ComentariosModal = ({ item, onClose }) => {
   const [comentario, setComentario] = useState("");
+  const [showEmojiPicker, setEmojiPicker] = useState(false);
+  const pickerRef = useRef(null);
+  const textComentarioRef = useRef(null);
+  const {setShowModal} = useComentariosStore()
   const { mutate: comentarioMutate } = useInsertarComentarioMutate({
     comentario: comentario,
     serComentario: setComentario,
   });
+
+  const addEmoji = (emojiData) => {
+    const emojiChar = emojiData.emoji;
+    const textarea = textComentarioRef.current;
+    if (!textarea) return;
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const originalText = textarea.value;
+
+    const newText =
+      originalText.substring(0, start) +
+      emojiChar +
+      originalText.substring(end);
+    setEmojiPicker(false);
+
+    setComentario(newText);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (pickerRef.current && !pickerRef.current.contains(e.target)) {
+        setEmojiPicker(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <div className="fixed inset-0 z-100 bfg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
@@ -28,7 +61,7 @@ export const ComentariosModal = ({ item, onClose }) => {
             </div>
           </div>
           <span>Descripcion</span>
-          <BtnClose />
+          <BtnClose funcion={setShowModal} />
         </header>
         <section className="p-4 overflow-y-auto flex-1">
           <p>sin comentarios</p>
@@ -42,13 +75,26 @@ export const ComentariosModal = ({ item, onClose }) => {
                 alt="avatar"
               />
               <input
+                ref={textComentarioRef}
                 type="text"
                 placeholder="Escribe un comentario..."
                 value={comentario}
                 onChange={(e) => setComentario(e.target.value)}
                 className="flex-1 bg-gray-100 dark:bg-neutral-800 text-sm rounded-2xl px-4 py-2 focus:outline-none resize-none"
               />
-              <button className="text-gray-500 hover:text-gray-700 relative">
+              {showEmojiPicker && (
+                <div className="absolute top-10 left-10 mt-2" ref={pickerRef}>
+                  <EmojiPicker
+                    onEmojiClick={addEmoji}
+                    theme="auto"
+                    searchDisabled
+                  />
+                </div>
+              )}
+              <button
+                className="text-gray-500 hover:text-gray-700 relative"
+                onClick={() => setEmojiPicker(!showEmojiPicker)}
+              >
                 <Icon icon="mdi:emoticon-outline" className="text-xl " />
               </button>
             </section>

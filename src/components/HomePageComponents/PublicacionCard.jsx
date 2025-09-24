@@ -3,10 +3,13 @@ import { PostImageFrame } from "./PostImageFrame";
 import { PostVideoFrame } from "./PostVideoFrame";
 import { usePostStore } from "../../store/postStore";
 import { useLikesPostMutate } from "../../stack/PostStack";
+import { useComentariosStore } from "../../store/ComentariosStore";
 
 export const PublicacionCard = ({ item }) => {
   const { setItemSelect } = usePostStore();
   const { mutate } = useLikesPostMutate();
+  const { setShowModal } = useComentariosStore();
+
   return (
     <div className="border-b border-gray-500/50 p-4">
       <div className="flex justify-between">
@@ -54,7 +57,12 @@ export const PublicacionCard = ({ item }) => {
               } cursor-pointer`}
             />
           </button>
-          <button className="flex items-center gap-2 cursor-pointer">
+          <button
+            className="flex items-center gap-2 cursor-pointer" onClick={() => {
+              setItemSelect(item)
+              setShowModal()
+            } }
+          >
             <Icon
               icon={"mdi:comment-outline"}
               className="text-3xl p-1 rounded-full text-gray-400 cursor-pointer"

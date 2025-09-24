@@ -10,9 +10,11 @@ import { useEffect, useRef } from "react";
 import { SpinnerLocal } from "../components/ui/spinners/SpinnerLocal";
 import { useSupabaseSubscription } from "../Hooks/useSupabaseSubscription";
 import { ComentariosModal } from "../components/HomePageComponents/ComentariosModal";
+import { useComentariosStore } from "../store/ComentariosStore";
 
 export const HomePage = () => {
   const { stateForm, setStateForm } = usePostStore();
+  const { showModal } = useComentariosStore();
   const {
     data: dataPost,
     fetchNextPage,
@@ -43,10 +45,10 @@ export const HomePage = () => {
     options: {
       event: "*",
       schema: "public",
-      table: "publicaciones"
+      table: "publicaciones",
     },
-    queryKey: ["Mostrar post"]
-  })
+    queryKey: ["Mostrar post"],
+  });
 
   return (
     <main className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
@@ -62,16 +64,13 @@ export const HomePage = () => {
                 <PublicacionCard key={`${pageIndex} - ${index}`} item={item} />
               ))
             )}
-            {
-              isFetchingNextPage && <SpinnerLocal />
-            }
-            
+            {isFetchingNextPage && <SpinnerLocal />}
           </div>
           Principal
         </article>
         <article>Sidebar derecho</article>
       </section>
-      <ComentariosModal />
+      {showModal && <ComentariosModal />}
     </main>
   );
 };
