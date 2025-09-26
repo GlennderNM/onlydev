@@ -17,5 +17,5 @@ export const useSupabaseSubscription = ({ chanelName, options, queryKey }) => {
     return () => {
       supabase.removeChannel(subscrition);
     };
-  }, [chanelName, options, queryKey]);
+  }, [chanelName, options, queryKey, queryClient]);
 };

@@ -31,11 +31,12 @@ export const useInsertarComentarioMutate = (p) => {
   });
 };
 
-export const useMostrarComentarios = () => {
-  const {} = useComentariosStore()
+export const useMostrarComentariosQuery = () => {
+  const {mostrarComentarios} = useComentariosStore()
+  const {itemSelect} = usePostStore()
 
   return useQuery({
-    queryKey: ["mostrar comentarios"],
-    queryFn: 
+    queryKey: ["mostrar comentarios", {_id_publicacion: itemSelect?.id}],
+    queryFn: ()=> mostrarComentarios({_id_publicacion: itemSelect?.id}),
   })
 }

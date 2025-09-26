@@ -13,7 +13,7 @@ import { ComentariosModal } from "../components/HomePageComponents/ComentariosMo
 import { useComentariosStore } from "../store/ComentariosStore";
 
 export const HomePage = () => {
-  const { stateForm, setStateForm, itemSelect } = usePostStore();
+  const { stateForm, setStateForm } = usePostStore();
   const { showModal } = useComentariosStore();
   const {
     data: dataPost,
@@ -48,6 +48,16 @@ export const HomePage = () => {
       table: "publicaciones",
     },
     queryKey: ["Mostrar post"],
+  });
+
+  useSupabaseSubscription({
+    channelName: "public:comentarios",
+    options: {
+      event: "*",
+      schema: "public",
+      table: "comentarios",
+    },
+    queryKey: ["mostrar comentarios"],
   });
 
   return (

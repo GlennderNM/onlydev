@@ -79,7 +79,7 @@ export const PublicacionCard = ({ item }) => {
           )}
           {item?.comentario_count > 0 && (
             <span className="text-xs text-gray-400 cursor-pointer hover:underline">
-              {item?.comentario_count} comentarios {console.log(item.comentarios_count)}
+              {item?.comentario_count} comentarios 
             </span>
           )}
         </div>
