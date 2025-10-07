@@ -76,7 +76,6 @@ export const HomePage = () => {
             )}
             {isFetchingNextPage && <SpinnerLocal />}
           </div>
-          Principal
         </article>
         <article>Sidebar derecho</article>
       </section>
