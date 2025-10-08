@@ -11,10 +11,12 @@ import { SpinnerLocal } from "../components/ui/spinners/SpinnerLocal";
 import { useSupabaseSubscription } from "../Hooks/useSupabaseSubscription";
 import { ComentariosModal } from "../components/HomePageComponents/ComentariosModal";
 import { useComentariosStore } from "../store/ComentariosStore";
+import { useMostrarRespuestaAComentariosQuery } from "../stack/RespuestasComentariosStack";
 
 export const HomePage = () => {
   const { stateForm, setStateForm } = usePostStore();
   const { showModal } = useComentariosStore();
+    const {data: dataRespuestaComentario} = useMostrarRespuestaAComentariosQuery()
   const {
     data: dataPost,
     fetchNextPage,

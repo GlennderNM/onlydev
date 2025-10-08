@@ -9,7 +9,11 @@ export const useRespuestasComentariosStore = create((set) => ({
   respuestaActivaParaComentarioId: null,
   setRespuestaActivaParaComentarioId: (p) =>
     set({
-      respuestaActivaParaComentarioId: p,
+      respuestaActivaParaComentarioId: p
+    }),
+  limpiarRespuestaActiva: () =>
+    set({
+      respuestaActivaParaComentarioId: null,
     }),
   insertarRespuestaAComentarios: async (p) => {
     const { error } = await supabase.from(tabla).insert(p);
