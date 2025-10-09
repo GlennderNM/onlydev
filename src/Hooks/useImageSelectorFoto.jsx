@@ -1,6 +1,40 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useRef } from "react";
+import { toast } from "sonner";
+import imageCompression from "browser-image-compression";
+import { useGlobalStore } from "../store/GlobalStore";
 
-export const ImageSelectorFoto = ({ fileUrl = "-" }) => {
+export const ImageSelectorFoto = () => {
+  const { setFileUrl, setFile, fileUrl} = useGlobalStore();
+  const fileInputRef = useRef(null);
+  function openFileSelector() {
+    fileInputRef.current.click();
+  }
+  const handleImageChange = async (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
+    if (!selectedFile.type.startsWith("image/")) {
+      alert("solo se permite imagenes.");
+      return;
+    }
+    try {
+      const options = {
+        // Opciones de compresion
+        maxSizeMB: selectedFile.size > 1024 * 1024 ? 0.1 : 0.2,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
+      const compressedFile = await imageCompression(selectedFile, options);
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(compressedFile);
+      setFile(compressedFile);
+      fileReader.onload = () => {
+        setFileUrl(fileReader.result);
+      };
+    } catch (error) {
+      toast.error("Error al comprimir la imagen", error);
+    }
+  };
   return (
     <div className="text-center mb-5">
       <div className="relative inline-block">
@@ -11,10 +45,20 @@ export const ImageSelectorFoto = ({ fileUrl = "-" }) => {
           alt="imagen select"
           className="w-20 h-20 rounded-lg object-cover transition-transform duration-300 hover:scale-105"
         />
-        <button className="absolute top-2 left-14 w-7 h-7 bg-neutral-800 hover:bg-neutral-600 text-white rounded-full flex items-center justify-center transition-all duration-200">
-          <Icon icon="lets-icons:edit-fill" className="text-[18px]" />
+        <button className="absolute top-2 left-14 w-7 h-7 bg-neutral-800 hover:bg-neutral-600 text-white rounded-full flex items-center justify-center transition-all duration-200 cursor-pointer">
+          <Icon
+            icon="lets-icons:edit-fill"
+            className="text-[18px]"
+            onClick={openFileSelector}
+          />
         </button>
-        <input type="file" accept="image/jpeg, image/png,/*" className="hidden" />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/jpeg, image/png,/*"
+          className="hidden"
+          onChange={handleImageChange}
+        />
       </div>
     </div>
   );
