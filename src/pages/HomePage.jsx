@@ -12,6 +12,7 @@ import { useSupabaseSubscription } from "../Hooks/useSupabaseSubscription";
 import { ComentariosModal } from "../components/HomePageComponents/ComentariosModal";
 import { useComentariosStore } from "../store/ComentariosStore";
 import { useMostrarRespuestaAComentariosQuery } from "../stack/RespuestasComentariosStack";
+import { FormActualizarPerfil } from "../components/Forms/FormActualizarPerfil";
 
 export const HomePage = () => {
   const { stateForm, setStateForm } = usePostStore();
@@ -62,8 +63,19 @@ export const HomePage = () => {
     queryKey: ["mostrar comentarios"],
   });
 
+  useSupabaseSubscription({
+    channelName: "public:respuestas_comentarios",
+    options: {
+      event: "*",
+      schema: "public",
+      table: "respuestas_comentarios",
+    },
+    queryKey: ["mostrar respuesta comentario"],
+  });
+
   return (
     <main className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
+      <FormActualizarPerfil />
       <Toaster position="top-left" />
       {stateForm && <FormsPost />}
       <section className="flex flex-col w-full h-screen">

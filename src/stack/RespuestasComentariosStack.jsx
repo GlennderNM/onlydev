@@ -10,7 +10,7 @@ export const useRespuestasComentariosMutate = () => {
     insertarRespuestaAComentarios,
     respuestaActivaParaComentarioId,
     respuesta,
-    setRespuesta,
+    setRespuesta, limpiarRespuestaActiva
   } = useRespuestasComentariosStore();
   const fechaActual = useFormattedDate();
   const { dataUsuarioAuth } = useUsuariosStore();
@@ -30,6 +30,7 @@ export const useRespuestasComentariosMutate = () => {
     onSuccess: () => {
       toast.success("Repuesta Enviada");
       setRespuesta("");
+      limpiarRespuestaActiva()
     },
   });
 };
