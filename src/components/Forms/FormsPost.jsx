@@ -80,7 +80,7 @@ export const FormsPost = () => {
                 className="w-full placeholder-gray-500 outline-none"
               ></textarea>
               {showEmojiPicker && (
-                <div className="absolute top-10 left-10 mt-2" ref={pickerRef}>
+                <div className="absolute top-10 left-10 mt-2 z-1" ref={pickerRef}>
                   <EmojiPicker
                     onEmojiClick={addEmoji}
                     theme="auto"

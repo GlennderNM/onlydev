@@ -20,7 +20,7 @@ export const useMostrarUsuariosQuery = () => {
 export const useEditarFotoUserMutate = () => {
   const { file } = useGlobalStore();
   const { editarUsuarios, dataUsuarioAuth } = useUsuariosStore();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["editar foto user"],
     mutationFn: async (data) => {
@@ -37,11 +37,20 @@ export const useEditarFotoUserMutate = () => {
       toast.error("Error al editar usuario: " + error.message);
     },
     onSuccess: () => {
-        if(file.size === undefined){
-            return toast.info("Seleccione una imagen")
-        }
-        toast.success("Datos guardados")
-        queryClient.invalidateQueries(["Mostrar user auth"])
-    }
+      if (file.size === undefined) {
+        return toast.info("Seleccione una imagen");
+      }
+      toast.success("Datos guardados");
+      queryClient.invalidateQueries(["Mostrar user auth"]);
+    },
+  });
+};
+
+export const useContarUsuariosTodosQuery = () => {
+  const { contarUsuariosTodos } = useUsuariosStore();
+
+  return useQuery({
+    queryKey: ["contar usuarios todos"],
+    queryFn: contarUsuariosTodos,
   });
 };

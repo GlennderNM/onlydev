@@ -74,4 +74,11 @@ export const useUsuariosStore = create((set) => ({
   editarUsuarios: async (p, fileold, filenew) => {
     await editarUsuarios(p, fileold, filenew);
   },
+  contarUsuariosTodos: async () => {
+    const {count, error} = await supabase.from(tabla).select("*",{count:"exact",head:true})
+    if(error){
+      throw new Error(error.message)
+    }
+    return count;
+  }
 }));
