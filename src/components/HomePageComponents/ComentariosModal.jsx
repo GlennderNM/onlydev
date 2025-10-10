@@ -61,7 +61,7 @@ export const ComentariosModal = () => {
           <div className="flex items-center gap-3 text-black dark:text-white">
             <img
               className="w-12 h-12 rounded-full object-cover"
-              src={item?.foto_perfil}
+              src={item?.foto_usuario}
             />
 
             <div className="flex items-center gap-2">

@@ -13,11 +13,14 @@ import { ComentariosModal } from "../components/HomePageComponents/ComentariosMo
 import { useComentariosStore } from "../store/ComentariosStore";
 import { useMostrarRespuestaAComentariosQuery } from "../stack/RespuestasComentariosStack";
 import { FormActualizarPerfil } from "../components/Forms/FormActualizarPerfil";
+import { useUsuariosStore } from "../store/UsuariosStore";
 
 export const HomePage = () => {
   const { stateForm, setStateForm } = usePostStore();
+  const { dataUsuarioAuth } = useUsuariosStore();
   const { showModal } = useComentariosStore();
-    const {data: dataRespuestaComentario} = useMostrarRespuestaAComentariosQuery()
+  const { data: dataRespuestaComentario } =
+    useMostrarRespuestaAComentariosQuery();
   const {
     data: dataPost,
     fetchNextPage,
@@ -75,7 +78,7 @@ export const HomePage = () => {
 
   return (
     <main className="flex min-h-screen bg-white dark:bg-bg-dark max-w-[1200px] mx-auto">
-      <FormActualizarPerfil />
+      {dataUsuarioAuth?.foto_perfil === "-" && <FormActualizarPerfil />}
       <Toaster position="top-left" />
       {stateForm && <FormsPost />}
       <section className="flex flex-col w-full h-screen">

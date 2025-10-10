@@ -4,6 +4,7 @@ import { PostVideoFrame } from "./PostVideoFrame";
 import { usePostStore } from "../../store/postStore";
 import { useLikesPostMutate } from "../../stack/PostStack";
 import { useComentariosStore } from "../../store/ComentariosStore";
+import { useRelativeTime } from "../../Hooks/useRelativeTime";
 
 export const PublicacionCard = ({ item }) => {
   const { setItemSelect } = usePostStore();
@@ -15,14 +16,14 @@ export const PublicacionCard = ({ item }) => {
       <div className="flex justify-between">
         <div className="flex items-center gap-3">
           <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/DEV_at_2011_MMVA.jpg/640px-DEV_at_2011_MMVA.jpg"
+            src={item?.foto_usuario}
             className="w-12 h-12 rounded-full object-cover"
           />
-          <span className="font-bold">Nombre de Usuario</span>
+          <span className="font-bold">{item?.nombre_usuario} </span>
         </div>
         <div className="flex items-center gap-2">
           <span className="text-gray-500 text-sm whitespace-nowrap">
-            Hace 2 horas
+            {useRelativeTime(item?.fecha)}
           </span>
           <button>
             <Icon icon="mdi:dots-horizontal" className="text-gray-500" />
@@ -78,8 +79,14 @@ export const PublicacionCard = ({ item }) => {
             </span>
           )}
           {item?.comentario_count > 0 && (
-            <span className="text-xs text-gray-400 cursor-pointer hover:underline">
-              {item?.comentario_count} comentarios 
+            <span
+              onClick={() => {
+                setItemSelect(item);
+                setShowModal();
+              }}
+              className="text-xs text-gray-400 cursor-pointer hover:underline"
+            >
+              {item?.comentario_count} comentarios
             </span>
           )}
         </div>
